@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#060E1A">
+<title>PromoCuauh 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#060E1A;--s1:#0D1A2E;--s2:#122038;--s3:#1A2D4A;--bd:#243859;
+  --ac:#00E5B8;--ac2:#3B82F6;--warn:#F59E0B;--err:#EF4444;
+  --t1:#F0F6FF;--t2:#7A90B0;--t3:#3A4F6A;--r:12px;--r2:8px;
+}
+html,body{height:100%;background:var(--bg);font-family:'Outfit',sans-serif;color:var(--t1);overflow:hidden;}
+#root{height:100vh;display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
+#pg-login{display:none;flex-direction:column;justify-content:center;min-height:100vh;padding:24px 20px;overflow-y:auto;}
+.login-logo{text-align:center;margin-bottom:28px;}
+.logo-icon{width:60px;height:60px;border-radius:16px;background:rgba(0,229,184,.1);border:1px solid rgba(0,229,184,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.login-title{font-size:24px;font-weight:700;}
+.login-sub{font-size:13px;color:var(--t2);margin-top:4px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;color:var(--t2);font-family:'DM Mono',monospace;letter-spacing:.04em;margin-bottom:5px;}
+.field select,.field input{width:100%;padding:12px 13px;border-radius:var(--r2);border:1px solid var(--bd);background:var(--s2);color:var(--t1);font-size:14px;font-family:'Outfit',sans-serif;-webkit-appearance:none;appearance:none;}
+.field select:focus,.field input:focus{outline:none;border-color:var(--ac);}
+.field input::placeholder{color:var(--t3);}
+.btn-big{width:100%;padding:15px;border-radius:var(--r);border:none;font-size:15px;font-weight:600;cursor:pointer;background:var(--ac);color:#060E1A;margin-top:4px;}
+.btn-big:active{transform:scale(.98);}
+#pg-app{display:none;flex-direction:column;height:100vh;}
+.topbar{padding:10px 16px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.topbar-left{flex:1;}
+.topbar-left h1{font-size:14px;font-weight:600;}
+.topbar-left .sub{font-size:11px;color:var(--t2);font-family:'DM Mono',monospace;margin-top:1px;}
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid currentColor;text-transform:uppercase;}
+.navbar{display:flex;background:var(--s1);border-top:1px solid var(--bd);flex-shrink:0;}
+.nav-tab{flex:1;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:transparent;border-top:2px solid transparent;transition:all .15s;}
+.nav-tab svg{width:20px;height:20px;stroke:var(--t3);stroke-width:1.8;fill:none;}
+.nav-tab span{font-size:10px;color:var(--t3);font-weight:500;}
+.nav-tab.on{border-top-color:var(--ac);}
+.nav-tab.on svg{stroke:var(--ac);}
+.nav-tab.on span{color:var(--ac);}
+.scroll{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch;}
+.scroll::-webkit-scrollbar{display:none;}
+.app-page{display:none;}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;}
+.card.accent{border-color:rgba(0,229,184,.3);background:linear-gradient(135deg,rgba(0,229,184,.07),rgba(0,229,184,.02));}
+.card-lbl{font-size:10px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;font-family:'DM Mono',monospace;margin-bottom:8px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
+.metric{background:var(--s2);border-radius:var(--r2);padding:10px 12px;}
+.metric .ml{font-size:9px;color:var(--t2);font-family:'DM Mono',monospace;margin-bottom:3px;text-transform:uppercase;}
+.metric .mv{font-size:24px;font-weight:700;color:var(--t1);line-height:1;}
+.metric .mv.ac{color:var(--ac);}
+.metric .ms{font-size:10px;color:var(--t2);margin-top:2px;}
+.prog-track{height:7px;background:var(--s3);border-radius:4px;overflow:hidden;margin-bottom:4px;}
+.prog-fill{height:100%;border-radius:4px;background:var(--ac);transition:width .5s;}
+.prog-lbl{font-size:11px;color:var(--t2);font-family:'DM Mono',monospace;}
+.form-card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;}
+.form-card .field{margin-bottom:11px;}
+.btn-submit{width:100%;padding:14px;border-radius:var(--r);border:none;font-size:15px;font-weight:600;cursor:pointer;background:var(--ac);color:#060E1A;font-family:'Outfit',sans-serif;}
+.btn-submit:active{transform:scale(.98);}
+.search-bar{width:100%;padding:10px 13px;border-radius:var(--r2);border:1px solid var(--bd);background:var(--s2);color:var(--t1);font-size:14px;font-family:'Outfit',sans-serif;margin-bottom:10px;}
+.search-bar:focus{outline:none;border-color:var(--ac);}
+.search-bar::placeholder{color:var(--t3);}
+.filt-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.filt-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--bd);background:transparent;font-size:12px;cursor:pointer;color:var(--t2);font-family:'Outfit',sans-serif;}
+.filt-btn.on{background:rgba(0,229,184,.12);color:var(--ac);border-color:rgba(0,229,184,.3);}
+.prom-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);}
+.prom-row:last-child{border:none;}
+.prom-pri{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.prom-pri-lg{width:12px;height:36px;border-radius:4px;flex-shrink:0;}
+.prom-info{flex:1;min-width:0;}
+.prom-nombre{font-size:13px;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prom-sub{font-size:11px;color:var(--t2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.prom-tel{font-size:11px;color:var(--t2);font-family:'DM Mono',monospace;flex-shrink:0;}
+.prom-card{background:var(--s2);border-radius:var(--r2);padding:12px;margin-bottom:8px;}
+.secc-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);}
+.secc-row:last-child{border:none;}
+.alert{padding:10px 13px;border-radius:var(--r2);font-size:12px;line-height:1.5;margin-bottom:10px;}
+.alert.info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#93C5FD;}
+.btn-export{width:100%;padding:13px;border-radius:var(--r);border:1px solid rgba(59,130,246,.4);background:rgba(59,130,246,.08);color:var(--ac2);font-size:14px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;margin-bottom:8px;}
+.btn-salir{width:100%;padding:13px;border-radius:var(--r);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.06);color:var(--err);font-size:14px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;}
+.btn-wa{width:100%;padding:13px;border-radius:var(--r);border:1px solid rgba(37,211,102,.4);background:rgba(37,211,102,.1);color:#25D366;font-size:14px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-wa:active{transform:scale(.98);}
+#modal-wa{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.75);align-items:flex-end;justify-content:center;}
+#modal-wa.show{display:flex;}
+.modal-box{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r) var(--r) 0 0;padding:20px;width:100%;max-width:430px;max-height:80vh;overflow-y:auto;}
+.modal-title{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--t1);}
+.msg-preview{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r2);padding:14px;font-family:'DM Mono',monospace;font-size:12px;color:var(--t1);white-space:pre-wrap;line-height:1.6;margin-bottom:12px;word-break:break-word;}
+.btn-copy{width:100%;padding:13px;border-radius:var(--r);border:none;background:var(--ac);color:#060E1A;font-size:14px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;margin-bottom:8px;}
+.btn-close-modal{width:100%;padding:11px;border-radius:var(--r);border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif;}
+#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--s1);border:1px solid var(--ac);border-radius:var(--r2);padding:9px 16px;font-size:12px;color:var(--ac);font-family:'DM Mono',monospace;opacity:0;transition:all .25s;white-space:nowrap;pointer-events:none;z-index:999;max-width:320px;text-align:center;}
+</style>
+</head>
+<body>
+<div id="root">
+
+<!-- LOGIN -->
+<div id="pg-login">
+  <div class="login-logo">
+    <div class="logo-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.8">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+    </div>
+    <div class="login-title">PromoCuauh 2027</div>
+    <div class="login-sub">Registro de promovidos - PRI Cuauhtemoc</div>
+  </div>
+  <div class="field">
+    <label>SECCIONAL</label>
+    <select id="lg-secc" onchange="llenaSecs()">
+      <option value="">Selecciona seccional...</option>
+      <option value="CUAUHTEMOC">CUAUHTEMOC (84 secciones)</option>
+      <option value="ANAHUAC">ANAHUAC (20 secciones)</option>
+      <option value="ALVARO OBREGON">ALVARO OBREGON (10 secciones)</option>
+      <option value="LAZARO CARDENAS">LAZARO CARDENAS (2 secciones)</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>SECCION</label>
+    <select id="lg-sec"><option value="">Elige seccion...</option></select>
+  </div>
+  <div class="field">
+    <label>TU NOMBRE (promotor)</label>
+    <input id="lg-nombre" type="text" placeholder="Nombre completo..." autocomplete="name">
+  </div>
+  <div class="field" id="field-url" style="display:block;">
+    <label># URL DEL COORDINADOR (opcional)</label>
+    <input id="lg-url" type="url" value="https://script.google.com/macros/s/AKfycbxG4B6iBvODPCoxqH07Ctwnbc_W8ofGpmzYPsxXSxxXQ1VW3TG6FgI-00Gnq6xOq3J4/exec" style="font-size:12px;">
+  </div>
+  <div style="font-size:12px;color:var(--t2);margin-bottom:12px;text-align:center;cursor:pointer;" onclick="document.getElementById('field-url').style.display=document.getElementById('field-url').style.display==='none'?'block':'none';">
+    Configurar sincronizacion con coordinador
+  </div>
+  <div class="alert info">Los datos se guardan en este telefono. Si tienes la URL del coordinador, se sincronizan automaticamente.</div>
+  <button class="btn-big" onclick="doLogin()">Entrar a mi seccion</button>
+  <div style="text-align:center;margin-top:10px;">
+    <span style="font-size:12px;color:var(--t2);cursor:pointer;" onclick="probarConexion()">Probar conexion con coordinador</span>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="pg-app">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1 id="tb-titulo">Sec. 000</h1>
+      <div class="sub" id="tb-sub">CAT - Promotor</div>
+    </div>
+    <span class="badge" id="cat-badge" style="color:var(--ac);border-color:var(--ac);">CAT</span>
+  </div>
+  <div class="scroll">
+    <!-- INICIO -->
+    <div class="app-page" id="page-app">
+      <div class="card accent">
+        <div class="card-lbl">Mi seccion</div>
+        <div class="grid2">
+          <div class="metric"><div class="ml">SECCION</div><div class="mv ac" id="info-sec">-</div></div>
+          <div class="metric"><div class="ml">CATEGORIA</div><div class="mv" id="info-cat">-</div></div>
+        </div>
+        <div class="grid2">
+          <div class="metric"><div class="ml">PADRON LN</div><div class="mv" style="font-size:18px;" id="info-ln">-</div></div>
+          <div class="metric"><div class="ml">SECCIONAL</div><div class="mv" style="font-size:13px;font-weight:600;" id="info-secc">-</div></div>
+        </div>
+        <div class="metric"><div class="ml">COLONIAS</div><div style="font-size:12px;color:var(--t1);padding:2px 0;" id="info-col">-</div></div>
+      </div>
+      <div class="card">
+        <div class="card-lbl">Promovidos registrados - <span id="res-total" style="color:var(--ac);">0</span></div>
+        <div class="prog-track"><div class="prog-fill" id="res-prog" style="width:0%;"></div></div>
+        <div class="prog-lbl" id="res-pct" style="margin-bottom:10px;">0% del padron</div>
+        <div class="grid4">
+          <div class="metric"><div class="ml">TOTAL</div><div class="mv ac" id="res-total2">0</div></div>
+          <div class="metric"><div class="ml">NO VOTA</div><div class="mv" style="color:var(--err);" id="res-p1">0</div></div>
+          <div class="metric"><div class="ml">A VECES</div><div class="mv" style="color:var(--warn);" id="res-p2">0</div></div>
+          <div class="metric"><div class="ml">ACTIVO</div><div class="mv" style="color:var(--ac);" id="res-p3">0</div></div>
+        </div>
+        <div class="metric"><div class="ml">CON TELEFONO</div><div style="font-size:14px;font-weight:600;color:var(--t1);" id="res-tel">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-lbl">Ultimos registrados</div>
+        <div id="res-ultimos"><div style="color:var(--t3);font-size:12px;text-align:center;padding:8px 0;">Ningun promovido aun</div></div>
+      </div>
+      <button class="btn-submit" onclick="showPage('agregar')" style="margin-bottom:8px;">+ Agregar promovido</button>
+      <button class="btn-submit" onclick="showPage('lista')" style="background:var(--s2);color:var(--t1);border:1px solid var(--bd);">Ver lista completa</button>
+    </div>
+    <!-- AGREGAR -->
+    <div class="app-page" id="page-agregar">
+      <div class="alert info">El nombre es obligatorio. Los demas campos son opcionales.</div>
+      <div class="form-card">
+        <div class="field"><label>NOMBRE COMPLETO *</label>
+          <input id="f-nombre" type="text" placeholder="Apellido Paterno Materno Nombre(s)" autocomplete="off"></div>
+        <div class="field"><label>TELEFONO</label>
+          <input id="f-tel" type="tel" placeholder="614 000 0000"></div>
+        <div class="field"><label># INE / CLAVE DE ELECTOR (IDMEX)</label>
+          <input id="f-ine" type="text" placeholder="Ej: PRRLSS80010212H800" autocomplete="off" oninput="this.value=this.value.toUpperCase()"></div>
+        <div class="field"><label>DIRECCION / REFERENCIA</label>
+          <input id="f-dir" type="text" placeholder="Calle, num, colonia..."></div>
+        <div class="field"><label>PERFIL DE VOTO</label>
+          <select id="f-pri">
+            <option value="3">Votante activo - siempre vota</option>
+            <option value="2">Vota a veces - necesita movilizacion</option>
+            <option value="1">No vota habitualmente - dificil</option>
+          </select></div>
+        <div class="field"><label>NOTA (opcional)</label>
+          <input id="f-nota" type="text" placeholder="Ej: vive cerca de la casilla B, tiene auto..."></div>
+      </div>
+      <button class="btn-submit" onclick="guardarPromovido()">Guardar promovido</button>
+    </div>
+    <!-- LISTA -->
+    <div class="app-page" id="page-lista">
+      <input class="search-bar" type="text" placeholder="Buscar por nombre, direccion o telefono..." oninput="buscarLista(this.value)">
+      <div class="filt-row">
+        <button class="filt-btn on" onclick="filtPri(0,this)">Todos</button>
+        <button class="filt-btn" onclick="filtPri(3,this)" style="color:var(--ac);">Activo</button>
+        <button class="filt-btn" onclick="filtPri(2,this)" style="color:var(--warn);">A veces</button>
+        <button class="filt-btn" onclick="filtPri(1,this)" style="color:var(--err);">No vota</button>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);margin-bottom:8px;" id="lista-cnt">0 registros</div>
+      <div id="lista-body"></div>
+    </div>
+    <!-- GLOBAL -->
+    <div class="app-page" id="page-resumen">
+      <div class="card accent">
+        <div class="card-lbl">Total municipal</div>
+        <div class="metric" style="margin-bottom:8px;">
+          <div class="ml">PROMOVIDOS REGISTRADOS</div>
+          <div class="mv ac" id="g-total" style="font-size:42px;">0</div>
+          <div class="ms">en todo Cuauhtemoc (este dispositivo)</div>
+        </div>
+        <div class="grid4">
+          <div class="metric"><div class="ml">CAT1</div><div class="mv" style="color:#00C896;font-size:20px;" id="g-cat1">0</div></div>
+          <div class="metric"><div class="ml">CAT2</div><div class="mv" style="color:#D97706;font-size:20px;" id="g-cat2">0</div></div>
+          <div class="metric"><div class="ml">CAT3</div><div class="mv" style="color:#DC2626;font-size:20px;" id="g-cat3">0</div></div>
+          <div class="metric"><div class="ml">CAT4</div><div class="mv" style="color:#6B7280;font-size:20px;" id="g-cat4">0</div></div>
+        </div>
+      </div>
+      <div class="card"><div class="card-lbl">Por seccional</div><div id="g-seccionales"><div style="color:var(--t3);font-size:12px;">Sin datos aun</div></div></div>
+      <div class="card"><div class="card-lbl">Top secciones con mas promovidos</div><div id="g-top"><div style="color:var(--t3);font-size:12px;text-align:center;padding:8px 0;">Sin datos aun</div></div></div>
+      <button class="btn-wa" onclick="compartirWA()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.526 5.858L0 24l6.336-1.497A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.003-1.374l-.36-.213-3.722.879.925-3.63-.234-.373A9.773 9.773 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Compartir por WhatsApp
+      </button>
+      <button class="btn-export" onclick="exportarCSV()">Exportar CSV</button>
+      <button class="btn-salir" onclick="cerrarSesion()">Cerrar sesion</button>
+    </div>
+  </div><!-- /scroll -->
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <button class="nav-tab on" id="tab-inicio" onclick="showPage('app')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Inicio</span>
+    </button>
+    <button class="nav-tab" id="tab-agregar" onclick="showPage('agregar')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span>Agregar</span>
+    </button>
+    <button class="nav-tab" id="tab-lista" onclick="showPage('lista')">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span>Lista</span>
+    </button>
+    <button class="nav-tab" id="tab-resumen" onclick="showPage('resumen');renderGlobal();">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      <span>Global</span>
+    </button>
+  </div>
+</div><!-- /pg-app -->
+</div><!-- /root -->
+
+<!-- MODAL WA -->
+<div id="modal-wa" onclick="cerrarModal(event)">
+  <div class="modal-box">
+    <div class="modal-title">Mensaje listo para WhatsApp</div>
+    <div class="msg-preview" id="wa-msg-preview">...</div>
+    <button class="btn-copy" onclick="copiarMsg()" id="btn-copy-wa">Copiar mensaje</button>
+    <a id="wa-link" href="#" target="_blank" style="display:block;width:100%;padding:13px;border-radius:var(--r);border:1px solid rgba(37,211,102,.4);background:rgba(37,211,102,.1);color:#25D366;font-size:14px;font-weight:600;text-align:center;text-decoration:none;margin-bottom:8px;">
+      Abrir WhatsApp directo
+    </a>
+    <button class="btn-close-modal" onclick="document.getElementById('modal-wa').classList.remove('show')">Cerrar</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script>
+var SECS={"CUAUHTEMOC":{"271":{"ln":1754,"cas":3,"cat":"CAT2","col":"CAXADAS, CTM, FERNANDO BAEZA"},"272":{"ln":4273,"cas":6,"cat":"CAT4","col":"ARENALES, BASASEACHI, CERRADA DE SAN ANT"},"273":{"ln":529,"cas":1,"cat":"CAT2","col":"CTM"},"274":{"ln":701,"cas":1,"cat":"CAT2","col":"CTM, FERNANDO BAEZA"},"275":{"ln":3077,"cas":5,"cat":"CAT2","col":"ANDREA, CAMPO REAL, CTM"},"276":{"ln":4767,"cas":8,"cat":"CAT2","col":"CAMPESTRE LAS HACIENDAS, CAMPO REAL, DE "},"277":{"ln":1273,"cas":2,"cat":"CAT2","col":"CERRADA DE SAN ANTONIO, CTM"},"278":{"ln":1534,"cas":3,"cat":"CAT2","col":"AGRICOLA SAN ANTONIO, ALICANTES, CERRADA"},"279":{"ln":2639,"cas":4,"cat":"CAT2","col":"CAMPESTRE LAS HACIENDAS, DE LA PRESA, HA"},"280":{"ln":1019,"cas":2,"cat":"CAT1","col":"TIERRA Y LIBERTAD SECTOR B"},"281":{"ln":758,"cas":2,"cat":"CAT1","col":"VIEJO"},"282":{"ln":516,"cas":1,"cat":"CAT2","col":"VIEJO"},"283":{"ln":756,"cas":2,"cat":"CAT1","col":"BASASEACHI, BENITO JUAREZ, FOCHOLO"},"284":{"ln":3095,"cas":6,"cat":"CAT1","col":"ALBORADAS, BASASEACHI, BENITO JUAREZ"},"285":{"ln":805,"cas":2,"cat":"CAT1","col":"LUCHA CAMPESINA, TIERRA Y LIBERTAD SECTO"},"286":{"ln":3914,"cas":6,"cat":"CAT1","col":"LA ESPERANZA, LAS AGUILAS, LUCHA CAMPESI"},"287":{"ln":661,"cas":1,"cat":"CAT2","col":"LUCHA CAMPESINA, TIERRA Y LIBERTAD SECTO"},"288":{"ln":1196,"cas":2,"cat":"CAT1","col":"DELICIAS, TIERRA Y LIBERTAD SECTOR B"},"289":{"ln":687,"cas":1,"cat":"CAT4","col":"FRANCISCO VILLA, INDEPENDENCIA, VIEJO"},"290":{"ln":799,"cas":2,"cat":"CAT4","col":"FRANCISCO VILLA"},"291":{"ln":639,"cas":1,"cat":"CAT4","col":"INDEPENDENCIA"},"292":{"ln":511,"cas":1,"cat":"CAT4","col":"CENTRO, INDEPENDENCIA, SAN ANTONIO"},"293":{"ln":276,"cas":1,"cat":"CAT4","col":"CENTRO"},"294":{"ln":311,"cas":1,"cat":"CAT4","col":"CENTRO"},"295":{"ln":355,"cas":1,"cat":"CAT4","col":"CENTRO"},"296":{"ln":720,"cas":1,"cat":"CAT1","col":"LUCHA CAMPESINA, TIERRA Y LIBERTAD SECTO"},"298":{"ln":327,"cas":1,"cat":"CAT4","col":"CENTRO"},"299":{"ln":586,"cas":1,"cat":"CAT4","col":"SAN ANTONIO"},"300":{"ln":626,"cas":1,"cat":"CAT4","col":"FRANCISCO VILLA, SAN ANTONIO"},"301":{"ln":451,"cas":1,"cat":"CAT2","col":"FRANCISCO VILLA"},"302":{"ln":703,"cas":1,"cat":"CAT2","col":"BENITO JUAREZ, FRANCISCO VILLA, NIXOS HE"},"303":{"ln":369,"cas":1,"cat":"CAT4","col":"BENITO JUAREZ"},"304":{"ln":413,"cas":1,"cat":"CAT2","col":"BENITO JUAREZ"},"305":{"ln":994,"cas":2,"cat":"CAT2","col":"AMPL FRANCISCO VILLA, BENITO JUAREZ, BUR"},"307":{"ln":5133,"cas":7,"cat":"CAT1","col":"AMPL EMILIANO ZAPATA, AMPL MIRADOR, AMPL"},"308":{"ln":1362,"cas":2,"cat":"CAT1","col":"AMPL EMILIANO ZAPATA, EMILIANO ZAPATA, S"},"309":{"ln":463,"cas":1,"cat":"CAT2","col":"FRANCISCO VILLA, NIXOS HEROES"},"310":{"ln":849,"cas":2,"cat":"CAT2","col":"FRANCISCO VILLA, INFONAVIT REVOLUCION, N"},"311":{"ln":1037,"cas":2,"cat":"CAT4","col":"PROGRESO, SAN ANTONIO"},"312":{"ln":930,"cas":2,"cat":"CAT2","col":"CENTRO, PROGRESO, REPUBLICA"},"313":{"ln":460,"cas":1,"cat":"CAT2","col":"CENTRO"},"314":{"ln":688,"cas":1,"cat":"CAT2","col":"CENTRO"},"315":{"ln":415,"cas":1,"cat":"CAT2","col":"CENTRO"},"316":{"ln":336,"cas":1,"cat":"CAT4","col":"CENTRO, LERDO, SANTA MARIA"},"317":{"ln":508,"cas":1,"cat":"CAT2","col":"CENTRO"},"318":{"ln":502,"cas":1,"cat":"CAT4","col":"FOVISSSTE, NIXOS HEROES"},"319":{"ln":865,"cas":2,"cat":"CAT2","col":"AMPL FRANCISCO VILLA, BUROCRATA, FOVISSS"},"320":{"ln":653,"cas":1,"cat":"CAT2","col":"EMILIANO ZAPATA"},"321":{"ln":2115,"cas":3,"cat":"CAT1","col":"AMPL EMILIANO ZAPATA, EMILIANO ZAPATA, P"},"322":{"ln":631,"cas":1,"cat":"CAT2","col":"EMILIANO ZAPATA, SIERRA AZUL, VENUSTIANO"},"323":{"ln":1226,"cas":2,"cat":"CAT1","col":"EMILIANO ZAPATA, LA CIUDADELA, PRESIDENT"},"324":{"ln":735,"cas":1,"cat":"CAT1","col":"EMILIANO ZAPATA, PASCUAL OROZCO, REVOLUC"},"325":{"ln":836,"cas":2,"cat":"CAT2","col":"FOVISSSTE, GUADALUPE VICTORIA, LOS ARENA"},"326":{"ln":1254,"cas":2,"cat":"CAT2","col":"CENTRO, REPUBLICA"},"327":{"ln":1235,"cas":2,"cat":"CAT2","col":"CENTRO, REFORMA, REPUBLICA"},"328":{"ln":477,"cas":1,"cat":"CAT2","col":"CENTRO, REPUBLICA"},"329":{"ln":586,"cas":1,"cat":"CAT2","col":"CENTRO, REFORMA, REPUBLICA"},"330":{"ln":3403,"cas":5,"cat":"CAT1","col":"ALCALDES, ALTA VISTA, AMPLIACION BARRIO "},"331":{"ln":901,"cas":2,"cat":"CAT2","col":"REFORMA, REPUBLICA"},"332":{"ln":3837,"cas":6,"cat":"CAT2","col":"AMPLIACION REPUBLICA, COLINAS DEL PUERTO"},"333":{"ln":2182,"cas":3,"cat":"CAT4","col":"GUADALUPE VICTORIA, LAS HUERTAS, LOS HUE"},"334":{"ln":1776,"cas":3,"cat":"CAT2","col":"REFORMA, REPUBLICA"},"335":{"ln":1550,"cas":3,"cat":"CAT1","col":"REFORMA"},"336":{"ln":836,"cas":2,"cat":"CAT1","col":"REFORMA"},"337":{"ln":804,"cas":2,"cat":"CAT1","col":"REFORMA"},"338":{"ln":2430,"cas":4,"cat":"CAT1","col":"AMPLIACION REPUBLICA, REFORMA, REPUBLICA"},"339":{"ln":1133,"cas":2,"cat":"CAT1","col":"GRANJAS FAMILIARES, REFORMA"},"340":{"ln":1689,"cas":3,"cat":"CAT1","col":"GRANJAS FAMILIARES, REFORMA"},"369":{"ln":3063,"cas":5,"cat":"CAT4","col":"ALVARO OBREGON, MORELOS"},"370":{"ln":448,"cas":1,"cat":"CAT4","col":"PROGRESO (SAN IGNACIO)"},"373":{"ln":4376,"cas":6,"cat":"CAT4","col":"CAMPO 2A, HARMS, NAPAVECHI"},"383":{"ln":5437,"cas":8,"cat":"CAT1","col":"ALBATERRA, ALBORADAS, AMPL EMILIANO ZAPA"},"384":{"ln":1476,"cas":3,"cat":"CAT1","col":"BOSQUES DE LA TARAHUMARA, CASA COLORADA "},"385":{"ln":946,"cas":2,"cat":"CAT4","col":"BOSQUES DE LA TARAHUMARA, SEIS DE ENERO "},"386":{"ln":764,"cas":2,"cat":"CAT2","col":"BARRAGANES, CASA BLANCA CAMPESTRE, CIENE"}},"ANAHUAC":{"343":{"ln":2248,"cas":3,"cat":"CAT1","col":"ANAHUAC"},"344":{"ln":943,"cas":2,"cat":"CAT1","col":"ANAHUAC"},"345":{"ln":299,"cas":1,"cat":"CAT4","col":"ANAHUAC"},"346":{"ln":482,"cas":1,"cat":"CAT2","col":"ANAHUAC"},"347":{"ln":743,"cas":1,"cat":"CAT1","col":"ANAHUAC"},"348":{"ln":2212,"cas":3,"cat":"CAT1","col":"ANAHUAC"},"349":{"ln":865,"cas":2,"cat":"CAT1","col":"ANAHUAC"},"350":{"ln":711,"cas":1,"cat":"CAT1","col":"ANAHUAC"},"351":{"ln":460,"cas":1,"cat":"CAT2","col":"ANAHUAC"},"353":{"ln":120,"cas":1,"cat":"CAT4","col":"ANAHUAC"},"368":{"ln":3130,"cas":5,"cat":"CAT4","col":"CAMPO 15, EL LLORON, VISTA HERMOSA"},"374":{"ln":358,"cas":1,"cat":"CAT3","col":"CENTRO CALLES, CUITLAHUAC DE ARRIBA, LA "},"375":{"ln":125,"cas":1,"cat":"CAT3","col":"LOMA PELONA"},"376":{"ln":112,"cas":1,"cat":"CAT3","col":"EL APACHE"},"377":{"ln":172,"cas":1,"cat":"CAT3","col":"BUSTILLOS, ZAMALOAPAN"},"378":{"ln":132,"cas":1,"cat":"CAT3","col":"FAVELA"},"379":{"ln":567,"cas":1,"cat":"CAT4","col":"RODRIGO M QUEVEDO"},"380":{"ln":282,"cas":1,"cat":"CAT3","col":"BUSTILLOS"},"381":{"ln":182,"cas":1,"cat":"CAT4","col":"TRES LAGUNITAS"},"382":{"ln":219,"cas":1,"cat":"CAT3","col":"ANAHUAC, TASCATE DEL AGUILA"}},"ALVARO OBREGON":{"341":{"ln":1256,"cas":2,"cat":"CAT3","col":"ALVARO OBREGON"},"342":{"ln":1193,"cas":2,"cat":"CAT3","col":"ALVARO OBREGON"},"358":{"ln":185,"cas":1,"cat":"CAT3","col":"CHUPADEROS, MAURILIO ORTIZ"},"359":{"ln":1064,"cas":2,"cat":"CAT2","col":"LA QUEMADA"},"361":{"ln":247,"cas":1,"cat":"CAT3","col":"ALLENDE, NUEVO HORIZONTE"},"362":{"ln":147,"cas":1,"cat":"CAT3","col":"REFORMA"},"363":{"ln":1221,"cas":3,"cat":"CAT3","col":"ARROYO DEL AGUA, CAMPO 100, EL VENADO"},"364":{"ln":2651,"cas":5,"cat":"CAT4","col":"CAMPO 101 NUEVO (COL VIANA), CAMPO 107, "},"365":{"ln":1118,"cas":2,"cat":"CAT1","col":"BARRIO XOCHIMILCO, EL VENADO, MARGARITA "},"367":{"ln":267,"cas":1,"cat":"CAT3","col":"NICOLAS BRAVO, NUEVO ZARAGOZA"}},"LAZARO CARDENAS":{"355":{"ln":261,"cas":1,"cat":"CAT4","col":"UNION CAMPESINA"},"356":{"ln":819,"cas":2,"cat":"CAT1","col":"LAZARO CARDENAS"}}};
+</script>
+<script>
+// -- ESTADO GLOBAL -------------------------------------------------
+var ST = {
+  seccional: '', sec: 0, nombre: '', cat: '',
+  page: 'login'
+};
+
+var CAT_COLOR = { CAT1:'#00C896', CAT2:'#D97706', CAT3:'#DC2626', CAT4:'#6B7280' };
+var CAT_BG    = { CAT1:'rgba(0,200,150,.12)', CAT2:'rgba(217,119,6,.12)', CAT3:'rgba(220,38,38,.12)', CAT4:'rgba(107,114,128,.08)' };
+
+// -- STORAGE -------------------------------------------------------
+function storageKey(sec) { return 'prom_v1_' + sec; }
+
+function getPromovidos(sec) {
+  try {
+    var raw = localStorage.getItem(storageKey(sec));
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function savePromovidos(sec, arr) {
+  try { localStorage.setItem(storageKey(sec), JSON.stringify(arr)); } catch(e) {}
+}
+
+function getAllPromovidos() {
+  var all = [];
+  for (var secc in SECS) {
+    for (var sec in SECS[secc]) {
+      var lista = getPromovidos(parseInt(sec));
+      for (var i=0; i<lista.length; i++) {
+        lista[i]._sec = parseInt(sec);
+        lista[i]._secc = secc;
+        lista[i]._cat = SECS[secc][sec].cat;
+        all.push(lista[i]);
+      }
+    }
+  }
+  return all;
+}
+
+// -- LOGIN ---------------------------------------------------------
+function llenaSecs() {
+  var secc = document.getElementById('lg-secc').value;
+  var sel  = document.getElementById('lg-sec');
+  sel.innerHTML = '<option value="">Elige secci-n...</option>';
+  if (!secc || !SECS[secc]) return;
+  var secs = Object.keys(SECS[secc]).sort(function(a,b){return parseInt(a)-parseInt(b);});
+  for (var i=0; i<secs.length; i++) {
+    var s = secs[i];
+    var d = SECS[secc][s];
+    var opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = 'Sec. ' + s + ' - ' + d.cat + ' - ' + (d.col||'') + ' (LN:' + d.ln + ')';
+    sel.appendChild(opt);
+  }
+}
+
+function doLogin() {
+  var secc = document.getElementById('lg-secc').value;
+  var sec  = parseInt(document.getElementById('lg-sec').value);
+  var nom  = document.getElementById('lg-nombre').value.trim();
+  if (!secc)    { toast('Selecciona el seccional'); return; }
+  if (!sec)     { toast('Selecciona la secci-n');   return; }
+  if (!nom)     { toast('Escribe tu nombre');        return; }
+
+  ST.seccional = secc;
+  ST.sec       = sec;
+  ST.nombre    = nom;
+  ST.cat       = (SECS[secc] && SECS[secc][sec]) ? SECS[secc][sec].cat : '';
+
+  var d = (SECS[secc] && SECS[secc][sec]) ? SECS[secc][sec] : {};
+
+  document.getElementById('tb-titulo').textContent  = 'Sec. ' + sec + ' - ' + secc;
+  document.getElementById('tb-sub').textContent     = ST.cat + ' - ' + nom;
+  document.getElementById('info-sec').textContent   = 'Secci-n ' + sec;
+  document.getElementById('info-secc').textContent  = secc;
+  document.getElementById('info-cat').textContent   = ST.cat;
+  document.getElementById('info-ln').textContent    = (d.ln||0).toLocaleString('es-MX');
+  document.getElementById('info-col').textContent   = d.col || '-';
+
+  var catc = CAT_COLOR[ST.cat] || '#6B7280';
+  document.getElementById('cat-badge').textContent = ST.cat;
+  document.getElementById('cat-badge').style.color = catc;
+  document.getElementById('cat-badge').style.borderColor = catc;
+
+  showPage('app');
+  renderResumen();
+}
+
+// -- PAGES ---------------------------------------------------------
+function showPage(id) {
+  ST.page = id;
+  var pages = document.querySelectorAll('.app-page');
+  for (var i=0; i<pages.length; i++) {
+    pages[i].style.display = pages[i].id === 'page-' + id ? 'block' : 'none';
+  }
+  document.getElementById('pg-login').style.display = id === 'login' ? 'flex' : 'none';
+  document.getElementById('pg-app').style.display   = id !== 'login' ? 'flex' : 'none';
+
+  if (id === 'app')       { renderResumen(); updateTabs('tab-inicio'); }
+  if (id === 'agregar')   { updateTabs('tab-agregar'); limpiarForm(); }
+  if (id === 'lista')     { renderLista(); updateTabs('tab-lista'); }
+  if (id === 'resumen')   { renderGlobal(); updateTabs('tab-resumen'); }
+}
+
+function updateTabs(activeId) {
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var i=0; i<tabs.length; i++) {
+    tabs[i].classList.remove('on');
+  }
+  var el = document.getElementById(activeId);
+  if (el) el.classList.add('on');
+}
+
+// -- RESUMEN DE SECCI-N --------------------------------------------
+function renderResumen() {
+  var lista = getPromovidos(ST.sec);
+  var total = lista.length;
+  var p1 = lista.filter(function(p){return p.pri===1;}).length;
+  var p2 = lista.filter(function(p){return p.pri===2;}).length;
+  var p3 = lista.filter(function(p){return p.pri===3;}).length;
+  var conTel = lista.filter(function(p){return p.tel&&p.tel.length>5;}).length;
+  var d = (SECS[ST.seccional] && SECS[ST.seccional][ST.sec]) ? SECS[ST.seccional][ST.sec] : {};
+  var ln = d.ln || 400;
+  var pct = ln > 0 ? Math.round(total/ln*1000)/10 : 0;
+
+  document.getElementById('res-total').textContent = total;
+  document.getElementById('res-p1').textContent    = p1;
+  document.getElementById('res-p2').textContent    = p2;
+  document.getElementById('res-p3').textContent    = p3;
+  document.getElementById('res-tel').textContent   = conTel;
+  document.getElementById('res-pct').textContent   = pct + '% del padr-n';
+  document.getElementById('res-prog').style.width  = Math.min(100, pct*5) + '%';
+
+  // -ltimos 3 agregados
+  var ultimos = lista.slice(-3).reverse();
+  var html = '';
+  if (ultimos.length === 0) {
+    html = '<div style="color:var(--t3);font-size:12px;text-align:center;padding:12px 0;">Ning-n promovido registrado a-n</div>';
+  } else {
+    for (var i=0; i<ultimos.length; i++) {
+      var p = ultimos[i];
+      var pc = p.pri===1?'var(--err)':p.pri===2?'var(--warn)':'var(--ac)';
+      html += '<div class="prom-row">' +
+        '<div class="prom-pri" style="background:'+pc+'"></div>' +
+        '<div class="prom-info"><div class="prom-nombre">'+escHtml(p.nombre)+'</div>' +
+        '<div class="prom-sub">'+(p.dir?escHtml(p.dir):'Sin direcci-n')+'</div></div>' +
+        '<div class="prom-tel">'+(p.tel||'-')+'</div>' +
+        '</div>';
+    }
+  }
+  document.getElementById('res-ultimos').innerHTML = html;
+}
+
+// -- AGREGAR PROMOVIDO ---------------------------------------------
+function limpiarForm() {
+  document.getElementById('f-nombre').value = '';
+  document.getElementById('f-tel').value    = '';
+  document.getElementById('f-dir').value    = '';
+  document.getElementById('f-pri').value    = '2';
+  document.getElementById('f-nota').value   = '';
+  document.getElementById('f-nombre').focus();
+}
+
+function guardarPromovido() {
+  var nombre = document.getElementById('f-nombre').value.trim();
+  var tel    = document.getElementById('f-tel').value.trim();
+  var dir    = document.getElementById('f-dir').value.trim();
+  var pri    = parseInt(document.getElementById('f-pri').value) || 2;
+  var nota   = document.getElementById('f-nota').value.trim();
+
+  if (!nombre) { toast('El nombre es obligatorio'); return; }
+
+  var lista = getPromovidos(ST.sec);
+
+  // Verificar duplicado
+  var dup = false;
+  for (var i=0; i<lista.length; i++) {
+    if (lista[i].nombre.toLowerCase() === nombre.toLowerCase()) { dup = true; break; }
+  }
+  if (dup) { toast('- Ya existe un promovido con ese nombre'); return; }
+
+  var nuevo = {
+    id:     Date.now(),
+    nombre: nombre,
+    tel:    tel,
+    dir:    dir,
+    pri:    pri,
+    nota:   nota,
+    fecha:  new Date().toLocaleDateString('es-MX'),
+    hora:   new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})
+  };
+
+  lista.push(nuevo);
+  savePromovidos(ST.sec, lista);
+  toast('- ' + nombre.split(' ')[0] + ' registrado - Total: ' + lista.length);
+  renderResumen();
+  limpiarForm();
+}
+
+// -- LISTA ---------------------------------------------------------
+var listaBusq = '', listaFiltPri = 0;
+
+function renderLista() {
+  var lista = getPromovidos(ST.sec);
+  var q = listaBusq.toLowerCase();
+  var filtrada = lista.filter(function(p) {
+    var matchQ = !q || p.nombre.toLowerCase().indexOf(q) >= 0 ||
+                 (p.dir && p.dir.toLowerCase().indexOf(q) >= 0) ||
+                 (p.tel && p.tel.indexOf(q) >= 0);
+    var matchP = !listaFiltPri || p.pri === listaFiltPri;
+    return matchQ && matchP;
+  });
+  filtrada.sort(function(a,b){ return a.pri - b.pri || a.nombre.localeCompare(b.nombre); });
+
+  document.getElementById('lista-cnt').textContent = filtrada.length + ' / ' + lista.length;
+
+  if (filtrada.length === 0) {
+    document.getElementById('lista-body').innerHTML =
+      '<div style="color:var(--t3);font-size:13px;text-align:center;padding:24px 0;">' +
+      (lista.length === 0 ? 'A-n no hay promovidos en esta secci-n.' : 'Sin resultados para la b-squeda.') +
+      '</div>';
+    return;
+  }
+
+  var html = '';
+  for (var i=0; i<filtrada.length; i++) {
+    var p = filtrada[i];
+    var pc  = p.pri===1?'var(--err)':p.pri===2?'var(--warn)':'var(--ac)';
+    var pln = p.pri===1?'No vota habitualmente':p.pri===2?'Vota a veces':'Votante activo';
+    html += '<div class="prom-card">' +
+      '<div style="display:flex;align-items:flex-start;gap:10px;">' +
+        '<div class="prom-pri-lg" style="background:'+pc+'"></div>' +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="font-size:14px;font-weight:600;color:var(--t1);margin-bottom:2px;">'+escHtml(p.nombre)+'</div>' +
+          '<div style="font-size:11px;color:var(--t2);margin-bottom:4px;">'+pln+'</div>' +
+          (p.dir?'<div style="font-size:12px;color:var(--t2);">- '+escHtml(p.dir)+'</div>':'') +
+          (p.tel?'<div style="font-size:12px;color:var(--t2);margin-top:2px;">- '+escHtml(p.tel)+'</div>':'') +
+          (p.nota?'<div style="font-size:11px;color:var(--t3);margin-top:4px;font-style:italic;">'+escHtml(p.nota)+'</div>':'') +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">' +
+          '<div style="font-size:10px;color:var(--t3);">'+p.hora+'</div>' +
+          '<button onclick="eliminar('+p.id+')" style="padding:4px 10px;border-radius:8px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.08);color:var(--err);font-size:11px;cursor:pointer;">Borrar</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+  document.getElementById('lista-body').innerHTML = html;
+}
+
+function buscarLista(v) {
+  listaBusq = v;
+  renderLista();
+}
+
+function filtPri(n, btn) {
+  listaFiltPri = n;
+  var btns = document.querySelectorAll('.filt-btn');
+  for (var i=0; i<btns.length; i++) btns[i].classList.remove('on');
+  if (btn) btn.classList.add('on');
+  renderLista();
+}
+
+function eliminar(id) {
+  var lista = getPromovidos(ST.sec);
+  var nueva = lista.filter(function(p){ return p.id !== id; });
+  if (nueva.length === lista.length) return;
+  savePromovidos(ST.sec, nueva);
+  toast('Promovido eliminado');
+  renderLista();
+  renderResumen();
+}
+
+// -- RESUMEN GLOBAL ------------------------------------------------
+function renderGlobal() {
+  var totalMun = 0;
+  var porCat = { CAT1:0, CAT2:0, CAT3:0, CAT4:0 };
+  var porSecc = {};
+  var tablaData = [];
+
+  for (var secc in SECS) {
+    porSecc[secc] = 0;
+    for (var sec in SECS[secc]) {
+      var lista = getPromovidos(parseInt(sec));
+      var n = lista.length;
+      var cat = SECS[secc][sec].cat;
+      totalMun += n;
+      porSecc[secc] += n;
+      porCat[cat] = (porCat[cat]||0) + n;
+      if (n > 0) {
+        tablaData.push({ sec: parseInt(sec), secc: secc, cat: cat, n: n,
+          ln: SECS[secc][sec].ln || 0 });
+      }
+    }
+  }
+
+  document.getElementById('g-total').textContent = totalMun;
+  document.getElementById('g-cat1').textContent  = porCat.CAT1 || 0;
+  document.getElementById('g-cat2').textContent  = porCat.CAT2 || 0;
+  document.getElementById('g-cat3').textContent  = porCat.CAT3 || 0;
+
+  // Por seccional
+  var seccHtml = '';
+  var seccList = ['CUAUHT-MOC','AN-HUAC','-LVARO OBREG-N','L-ZARO C-RDENAS'];
+  for (var i=0; i<seccList.length; i++) {
+    var s = seccList[i];
+    var n = porSecc[s] || 0;
+    var nsecs = Object.keys(SECS[s]||{}).length;
+    var pct = nsecs > 0 ? Math.round(n/nsecs*10)/10 : 0;
+    seccHtml += '<div class="secc-row">' +
+      '<div style="flex:1">' +
+        '<div style="font-size:13px;font-weight:600;color:var(--t1);">'+s+'</div>' +
+        '<div style="font-size:11px;color:var(--t2);">'+nsecs+' secciones - '+pct+' prom/sec en promedio</div>' +
+      '</div>' +
+      '<div style="font-family:\'DM Mono\',monospace;font-size:20px;font-weight:700;color:var(--ac);">'+n+'</div>' +
+    '</div>';
+  }
+  document.getElementById('g-seccionales').innerHTML = seccHtml || '<div style="color:var(--t3);font-size:12px;">Sin datos a-n</div>';
+
+  // Top secciones
+  tablaData.sort(function(a,b){ return b.n - a.n; });
+  var topHtml = '';
+  var topN = Math.min(10, tablaData.length);
+  if (topN === 0) {
+    topHtml = '<div style="color:var(--t3);font-size:12px;text-align:center;padding:12px 0;">Sin promovidos registrados a-n en ninguna secci-n</div>';
+  } else {
+    for (var i=0; i<topN; i++) {
+      var d = tablaData[i];
+      var cc = CAT_COLOR[d.cat] || '#6B7280';
+      var pct2 = d.ln > 0 ? Math.round(d.n/d.ln*1000)/10 : 0;
+      topHtml += '<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd);">' +
+        '<div style="font-family:\'DM Mono\',monospace;font-size:18px;font-weight:700;color:var(--t1);width:28px;">'+d.n+'</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-size:13px;font-weight:600;color:var(--t1);">Sec. '+d.sec+'</div>' +
+          '<div style="font-size:11px;color:var(--t2);">'+d.secc+' - '+pct2+'% del padr-n</div>' +
+        '</div>' +
+        '<span style="font-size:9px;font-family:\'DM Mono\',monospace;padding:2px 7px;border-radius:3px;border:1px solid '+cc+';color:'+cc+';">'+d.cat+'</span>' +
+      '</div>';
+    }
+  }
+  document.getElementById('g-top').innerHTML = topHtml;
+}
+
+// -- EXPORTAR CSV --------------------------------------------------
+function exportarCSV() {
+  var todos = getAllPromovidos();
+  if (todos.length === 0) { toast('No hay datos para exportar'); return; }
+
+  var lines = ['Seccional,Secci-n,Categor-a,Nombre,Tel-fono,Direcci-n,Prioridad,Nota,Fecha,Hora'];
+  var priLabel = { 1:'No vota habitualmente', 2:'Vota a veces', 3:'Votante activo' };
+  for (var i=0; i<todos.length; i++) {
+    var p = todos[i];
+    var row = [
+      '"'+p._secc+'"',
+      p._sec,
+      p._cat,
+      '"'+(p.nombre||'').replace(/"/g,'""')+'"',
+      '"'+(p.tel||'')+'"',
+      '"'+(p.dir||'').replace(/"/g,'""')+'"',
+      '"'+(priLabel[p.pri]||'')+'"',
+      '"'+(p.nota||'').replace(/"/g,'""')+'"',
+      p.fecha||'',
+      p.hora||''
+    ];
+    lines.push(row.join(','));
+  }
+
+  var csv = '\uFEFF' + lines.join('\n');
+  var blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'promovidos_cuauhtemoc_' + new Date().toLocaleDateString('es-MX').replace(/\//g,'-') + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV exportado - ' + todos.length + ' promovidos');
+}
+
+// -- CERRAR SESI-N -------------------------------------------------
+function cerrarSesion() {
+  ST.seccional=''; ST.sec=0; ST.nombre='';
+  showPage('login');
+  document.getElementById('lg-secc').value   = '';
+  document.getElementById('lg-sec').innerHTML = '<option value="">Elige secci-n...</option>';
+  document.getElementById('lg-nombre').value  = '';
+}
+
+// -- UTILS ---------------------------------------------------------
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function toast(msg) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.opacity = '1';
+  el.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(el._t);
+  el._t = setTimeout(function() {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(-50%) translateY(16px)';
+  }, 2500);
+}
+
+window.onload = function() {
+  showPage('login');
+};
+
+
+// sync res-total2
+var _orig = renderResumen;
+renderResumen = function() {
+  _orig();
+  var v  = document.getElementById('res-total').textContent;
+  var e2 = document.getElementById('res-total2');
+  if(e2) e2.textContent = v;
+};
+
+// scriptUrl state
+ST.scriptUrl = localStorage.getItem('prom_script_url') || 'https://script.google.com/macros/s/AKfycbxG4B6iBvODPCoxqH07Ctwnbc_W8ofGpmzYPsxXSxxXQ1VW3TG6FgI-00Gnq6xOq3J4/exec';
+
+// doLogin patch: save scriptUrl
+var _origLogin = doLogin;
+doLogin = function() {
+  var url = document.getElementById('lg-url').value.trim();
+  if(url) {
+    ST.scriptUrl = url;
+    localStorage.setItem('prom_script_url', url);
+  } else {
+    ST.scriptUrl = localStorage.getItem('prom_script_url') || 'https://script.google.com/macros/s/AKfycbxG4B6iBvODPCoxqH07Ctwnbc_W8ofGpmzYPsxXSxxXQ1VW3TG6FgI-00Gnq6xOq3J4/exec';
+  }
+  _origLogin();
+};
+
+// sincronizar con sheets
+function sincronizarPromovido(p) {
+  var url = ST.scriptUrl;
+  if(!url) return;
+  var priLabel = {1:'No vota habitualmente',2:'Vota a veces',3:'Votante activo'};
+  fetch(url, {method:'POST', body:JSON.stringify({
+    tipo:'promovido', seccional:ST.seccional, sec:ST.sec, cat:ST.cat,
+    promotor:ST.nombre, nombre:p.nombre, tel:p.tel||'', ine:p.ine||'',
+    dir:p.dir||'', priLabel:priLabel[p.pri]||'', nota:p.nota||'',
+    fecha:p.fecha||'', hora:p.hora||''
+  })})
+  .then(function(r){return r.json();})
+  .then(function(d){if(d.status==='ok') toast('Sincronizado con coordinador');})
+  .catch(function(){});
+}
+
+// patch guardarPromovido to also sync
+var _origGuardar = guardarPromovido;
+guardarPromovido = function() {
+  var nombre = document.getElementById('f-nombre').value.trim();
+  var tel    = document.getElementById('f-tel').value.trim();
+  var ine    = document.getElementById('f-ine').value.trim().toUpperCase();
+  var dir    = document.getElementById('f-dir').value.trim();
+  var pri    = parseInt(document.getElementById('f-pri').value) || 2;
+  var nota   = document.getElementById('f-nota').value.trim();
+  if(!nombre){toast('El nombre es obligatorio');return;}
+  var lista = getPromovidos(ST.sec);
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].nombre.toLowerCase()===nombre.toLowerCase()){toast('Ya existe ese nombre');return;}
+  }
+  var nuevo = {id:Date.now(),nombre:nombre,tel:tel,ine:ine,dir:dir,pri:pri,nota:nota,
+    fecha:new Date().toLocaleDateString('es-MX'),
+    hora:new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'})
+  };
+  lista.push(nuevo);
+  savePromovidos(ST.sec, lista);
+  toast('Guardado: ' + nombre.split(' ')[0] + ' - Total: ' + lista.length);
+  renderResumen();
+  limpiarForm();
+  sincronizarPromovido(nuevo);
+};
+
+// limpiar form con ine
+var _origLimpiar = limpiarForm;
+limpiarForm = function() {
+  _origLimpiar();
+  var el = document.getElementById('f-ine');
+  if(el) el.value = '';
+};
+
+// WhatsApp
+function compartirWA() {
+  var lista = getPromovidos(ST.sec);
+  var total=lista.length, p1=0,p2=0,p3=0,conTel=0;
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].pri===1)p1++; else if(lista[i].pri===2)p2++; else p3++;
+    if(lista[i].tel&&lista[i].tel.length>5)conTel++;
+  }
+  var d   = (SECS[ST.seccional]&&SECS[ST.seccional][ST.sec])?SECS[ST.seccional][ST.sec]:{};
+  var ln  = d.ln||0;
+  var pct = ln>0?Math.round(total/ln*1000)/10:0;
+  var todos = getAllPromovidos();
+  var totMun=todos.length, cc={CAT1:0,CAT2:0,CAT3:0,CAT4:0};
+  for(var i=0;i<todos.length;i++) cc[todos[i]._cat]=(cc[todos[i]._cat]||0)+1;
+  var ahora=new Date();
+  var msg =
+    "REPORTE PROMOVIDOS - PRI CUAUHTEMOC\n" +
+    "================================\n" +
+    "Sec. "+ST.sec+" - "+ST.seccional+" - "+ST.cat+"\n" +
+    "Promotor: "+ST.nombre+"\n" +
+    "--------------------------------\n" +
+    "MI SECCION:\n" +
+    "Total promovidos:  "+total+"\n" +
+    "  Votante activo:  "+p3+"\n" +
+    "  Vota a veces:    "+p2+"\n" +
+    "  No vota hab.:    "+p1+"\n" +
+    "  Con telefono:    "+conTel+"\n" +
+    "  % del padron:    "+pct+"%\n" +
+    "--------------------------------\n" +
+    "MUNICIPIO (mi dispositivo):\n" +
+    "Total general:     "+totMun+"\n" +
+    "  CAT1:"+cc.CAT1+"  CAT2:"+cc.CAT2+"  CAT3:"+cc.CAT3+"  CAT4:"+cc.CAT4+"\n" +
+    "--------------------------------\n" +
+    ahora.toLocaleDateString('es-MX')+" - "+
+    ahora.toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('wa-msg-preview').textContent = msg;
+  document.getElementById('wa-link').href = "https://wa.me/?text="+encodeURIComponent(msg);
+  document.getElementById('btn-copy-wa').textContent = "Copiar mensaje";
+  document.getElementById('modal-wa').classList.add('show');
+}
+
+function copiarMsg() {
+  var msg = document.getElementById('wa-msg-preview').textContent;
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(function(){
+      document.getElementById('btn-copy-wa').textContent="Copiado!";
+      toast("Copiado - pega en WhatsApp");
+    });
+  } else {
+    var ta=document.createElement('textarea');
+    ta.value=msg; ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.select();
+    try{document.execCommand('copy');document.getElementById('btn-copy-wa').textContent="Copiado!";toast("Copiado");}
+    catch(e){toast("Selecciona y copia manualmente");}
+    document.body.removeChild(ta);
+  }
+}
+
+function cerrarModal(e){
+  if(e.target.id==='modal-wa') document.getElementById('modal-wa').classList.remove('show');
+}
+
+function probarConexion(){
+  var url=(document.getElementById('lg-url')?document.getElementById('lg-url').value.trim():'')||ST.scriptUrl;
+  if(!url){toast('Ingresa la URL primero');return;}
+  toast('Probando...');
+  fetch(url+'?tipo=ping').then(function(r){return r.json();})
+    .then(function(d){toast(d.status==='ok'?'Conexion exitosa!':'Error: '+d.msg);})
+    .catch(function(){toast('Sin respuesta - revisa la URL');});
+}
+
+</script>
+</body></html>
